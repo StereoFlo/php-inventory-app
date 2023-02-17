@@ -1,4 +1,4 @@
-# Run the app
+# Run the app (WIP)
 
 ```shell
 docker-compose up --build
