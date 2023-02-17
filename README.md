@@ -6,7 +6,7 @@ docker-compose up --build
 
 # Disclaimer
 
-this is a ported version of the golang language app. The basic version of the server is [here](https://github.com/StereoFlo/go-inventory-app)
+this php version is from the golang language. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app)
 
 ### Available routes
 `GET /devices/:device_id`
