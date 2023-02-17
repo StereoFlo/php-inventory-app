@@ -4,6 +4,10 @@
 docker-compose up --build
 ```
 
+# Disclaimer
+
+this is a ported version of the golang language. The basic version of the server is [here](https://github.com/StereoFlo/go-inventory-app)
+
 ### Available routes
 `GET /devices/:device_id`
 
