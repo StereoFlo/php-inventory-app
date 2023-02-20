@@ -1,12 +1,13 @@
+# Disclaimer
+
+this php version is a portable from the golang language package. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app)
+
 # Run the app (WIP)
 
 ```shell
 docker-compose up --build
 ```
 
-# Disclaimer
-
-this php version is from the golang language. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app)
 
 ### Available routes
 `GET /devices/:device_id`
