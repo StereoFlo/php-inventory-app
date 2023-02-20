@@ -7,7 +7,10 @@ use App\Domain\Repository\DeviceRepository;
 use App\Infrastructure\Dto\DeviceCreateDto;
 use App\Infrastructure\Mapper\DeviceMapper;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/devices', name: 'deviceCreate', methods: [Request::METHOD_POST])]
 class DeviceCreateController
 {
     public function __construct(private readonly DeviceRepository $deviceService, private readonly DeviceMapper $mapper)

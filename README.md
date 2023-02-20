@@ -11,6 +11,9 @@ this php version is from the golang language. You can find the original version 
 ### Available routes
 `GET /devices/:device_id`
 
+create a device
+
+`POST /devices`
 
 # Utils
 
