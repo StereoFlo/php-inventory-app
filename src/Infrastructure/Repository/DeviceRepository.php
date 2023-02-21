@@ -8,9 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class DeviceRepository implements DeviceRepositoryInterface
 {
-    public function __construct(private readonly EntityManagerInterface $manager)
-    {
-    }
+    public function __construct(private readonly EntityManagerInterface $manager) {}
 
     public function getByLocationId(int $locationId, int $limit, int $offset): ?Device
     {

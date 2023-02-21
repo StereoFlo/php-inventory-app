@@ -4,26 +4,31 @@ namespace App\Infrastructure\Service;
 
 use App\Domain\Entity\Device;
 use App\Domain\Repository\DeviceRepository;
+use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
 use App\Infrastructure\Mapper\DeviceMapper;
 
 class DeviceService implements DeviceServiceInterface
 {
-    public function __construct(private readonly DeviceRepository $deviceRepository, private readonly DeviceMapper $mapper) {}
+    public function __construct(
+        private readonly DeviceRepository $deviceRepo,
+        private readonly DeviceMapper     $mapper,
+        private readonly OutletRepository $outletRepo
+    ) {}
 
     public function getByLocationId(int $locationId, int $limit, int $offset): ?Device
     {
-        return $this->deviceRepository->getByLocationId($locationId, $limit, $offset);
+        return $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
     }
 
     public function getById(int $id): ?Device
     {
-        return $this->deviceRepository->getById($id);
+        return $this->deviceRepo->getById($id);
     }
 
     public function getByNameAndIp(string $name, string $ip): ?Device
     {
-        return $this->deviceRepository->getByNameAndIp($name, $ip);
+        return $this->deviceRepo->getByNameAndIp($name, $ip);
     }
 
     /**
@@ -37,15 +42,22 @@ class DeviceService implements DeviceServiceInterface
                            ?int    $locationId,
                            ?array  $outlets): array
     {
+        $outletsToSave = [];
+        if (null !== $outlets && 0 < count($outlets)) {
+            $dbOutlets = $this->outletRepo->getByIds($outlets);
+            if (null !== $dbOutlets) {
+                $outletsToSave = $dbOutlets;
+            }
+        }
         $device = new Device(
             $name,
             $netName,
             $ip,
             $timeToCheck,
             $locationId,
-            [], //todo
+            $outletsToSave,
         );
-        $this->deviceRepository->save($device);
+        $this->deviceRepo->save($device);
 
         return $this->mapper->map($device);
     }
