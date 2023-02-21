@@ -14,7 +14,7 @@ class DeviceCreateDto implements RequestDtoInterface
     private readonly ?int $locationId;
 
     /**
-     * @var array<int>|null
+     * @var int[]|null
      */
     private readonly ?array $outlets;
 
