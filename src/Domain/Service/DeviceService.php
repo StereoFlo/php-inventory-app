@@ -13,6 +13,7 @@ interface DeviceService
     public function getByNameAndIp(string $name, string $ip): ?Device;
 
     /**
+     * @param int[] $outlets
      * @return array<string, mixed>
      */
     public function save(
