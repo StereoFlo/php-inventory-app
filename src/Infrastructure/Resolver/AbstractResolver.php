@@ -32,6 +32,7 @@ abstract class AbstractResolver implements ArgumentValueResolverInterface
     {
         if (static::CURRENT_CLASS === $argument->getType()) {
             $class = $argument->getType();
+            /** @var RequestDtoInterface $dto */
             $dto   = new $class($request);
             $this->validate($dto);
             yield $dto;

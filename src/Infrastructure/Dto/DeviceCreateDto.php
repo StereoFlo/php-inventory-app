@@ -20,12 +20,12 @@ class DeviceCreateDto implements RequestDtoInterface
 
     public function __construct(Request $request)
     {
-        $this->name        = $request->request->get('name');
-        $this->netName     = $request->request->get('net_name');
-        $this->ip          = $request->request->get('ip');
-        $this->timeToCheck = $request->request->get('time_to_check');
-        $this->locationId  = $request->request->get('location_id');
-        $this->outlets     = $request->request->get('outlets');
+        $this->name        = $request->request->has('name') ? (string) $request->request->get('name') : null;
+        $this->netName     = $request->request->has('net_name') ? (string) $request->request->get('net_name') : null;
+        $this->ip          = $request->request->has('name') ? (string) $request->request->get('name') : null;
+        $this->timeToCheck = $request->request->has('time_to_check') ? (int) $request->request->get('time_to_check') : null;
+        $this->locationId  = $request->request->has('location_id') ? (int) $request->request->get('location_id') : null;
+        $this->outlets     = $request->request->has('outlets') ? (array) $request->request->get('outlets') : null;
     }
 
     public function getName(): ?string

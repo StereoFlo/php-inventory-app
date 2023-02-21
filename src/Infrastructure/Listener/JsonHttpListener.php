@@ -60,10 +60,11 @@ class JsonHttpListener implements EventSubscriberInterface
     /**
      * decodes request body as json.
      *
-     * @return array<string,mixed>
+     * @return array<mixed>
      */
     private function getJsonDecoded(): array
     {
+        /** @var array<mixed> $data */
         $data = json_decode($this->request->getContent(), true);
         if (\JSON_ERROR_NONE !== json_last_error()) {
             throw new BadRequestHttpException();
@@ -85,6 +86,7 @@ class JsonHttpListener implements EventSubscriberInterface
             return $this;
         }
         foreach ($data as $k => $v) {
+            /** @var array<mixed> $v */
             $this->request->request->set((string) $k, $v);
         }
 

@@ -15,14 +15,21 @@ class DeviceMapper
      */
     public function map(Device $device): array
     {
-        return [
+        $res = [
             'id'          => $device->getId(),
             'name'        => $device->getName(),
             'ip'          => $device->getIp(),
             'net_name'    => $device->getNetName(),
             'timeToCheck' => $device->getTimeToCheck(),
             'location_id' => $device->getLocationId(),
-            'outlets'     => $this->outletMapper->mapCollection($device->getOutlets()),
+            'outlets'     => null,
         ];
+
+        $outlets = $device->getOutlets();
+        if (null !== $outlets) {
+            $res['outlets'] = $this->outletMapper->mapCollection($outlets);
+        }
+
+        return $res;
     }
 }
