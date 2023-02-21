@@ -7,6 +7,7 @@ use App\Domain\Repository\DeviceRepository;
 use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
 use App\Infrastructure\Mapper\DeviceMapper;
+use function count;
 
 class DeviceService implements DeviceServiceInterface
 {
