@@ -30,12 +30,12 @@ class DeviceService implements DeviceServiceInterface
      * @param int[]|null $outlets
      * @return array<string, mixed>
      */
-    public function save(?string $name,
-                         ?string $netName,
-                         ?string $ip,
-                         ?int    $timeToCheck,
-                         ?int    $locationId,
-                         ?array  $outlets): array
+    public function create(?string $name,
+                           ?string $netName,
+                           ?string $ip,
+                           ?int    $timeToCheck,
+                           ?int    $locationId,
+                           ?array  $outlets): array
     {
         $device = new Device(
             $name,

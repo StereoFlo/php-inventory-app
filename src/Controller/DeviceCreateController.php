@@ -17,7 +17,7 @@ class DeviceCreateController
 
     public function __invoke(DeviceCreateDto $dto): JsonResponse
     {
-        $e = $this->deviceService->save($dto->getName(),
+        $e = $this->deviceService->create($dto->getName(),
             $dto->getNetName(),
             $dto->getIp(),
             $dto->getTimeToCheck(),

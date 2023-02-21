@@ -16,7 +16,7 @@ interface DeviceService
      * @param int[] $outlets
      * @return array<string, mixed>
      */
-    public function save(
+    public function create(
         ?string $name,
         ?string $netName,
         ?string $ip,
