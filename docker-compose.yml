@@ -1,6 +1,7 @@
 version: '3'
 services:
   nginx:
+    container_name: php-infrastructure-app-nginx
     image: nginx:latest
     ports:
       - "8000:80"
@@ -12,6 +13,7 @@ services:
     networks:
       - app_php_network
   php:
+    container_name: php-infrastructure-app-app
     build: ./docker/php
     volumes:
       - .:/var/app
@@ -22,6 +24,7 @@ services:
     env_file:
       - .env
   db:
+    container_name: php-infrastructure-app-db
     image: postgres:14.1-alpine
     env_file:
       - .env
