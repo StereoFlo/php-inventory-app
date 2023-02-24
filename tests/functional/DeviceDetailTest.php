@@ -4,10 +4,11 @@ namespace App\Tests\functional;
 
 use App\Controller\DeviceDetailController;
 use App\Domain\Entity\Device;
-use App\Domain\Repository\DeviceRepository;
+use App\Domain\Service\DeviceService;
 use App\Infrastructure\Mapper\DeviceMapper;
 use App\Infrastructure\Mapper\OutletMapper;
 use DateTimeImmutable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class DeviceDetailTest extends KernelTestCase
@@ -22,7 +23,7 @@ class DeviceDetailTest extends KernelTestCase
         $content    = $response->getContent();
         $arr        = json_decode($content, true);
         $this->assertEquals($arr['data']['id'], $device->getId());
-        $this->assertEquals($arr['data']['outlets'], $device->getOutlets());
+        $this->assertEquals($arr['data']['outlets'], null);
     }
 
     public function getDevice(): Device
@@ -41,7 +42,7 @@ class DeviceDetailTest extends KernelTestCase
         $device->method('getLocationId')
             ->willReturn(null);
         $device->method('getOutlets')
-            ->willReturn(null);
+            ->willReturn(new ArrayCollection());
         $device->method('getCreatedAt')
             ->willReturn(new DateTimeImmutable());
         $device->method('getUpdatedAt')
@@ -50,9 +51,9 @@ class DeviceDetailTest extends KernelTestCase
         return $device;
     }
 
-    private function getDeviceRepository(Device $device): DeviceRepository
+    private function getDeviceRepository(Device $device): DeviceService
     {
-        $deviceRepo = $this->createMock(DeviceRepository::class);
+        $deviceRepo = $this->createMock(DeviceService::class);
         $deviceRepo->expects($this->once())
             ->method('getById')
             ->willReturn($device);

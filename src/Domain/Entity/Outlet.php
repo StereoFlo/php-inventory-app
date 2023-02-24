@@ -4,6 +4,8 @@ namespace App\Domain\Entity;
 
 use DateTimeImmutable;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -15,6 +17,20 @@ class Outlet
     #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
     private int $id;
 
+    #[ORM\Column(type: 'string', length: 250)]
+    private string $name;
+
+    #[ORM\Column(type: 'integer', options: ['default' => null, 'unsigned' => true])]
+    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\JoinColumn(name: 'location_id', referencedColumnName: 'id')]
+    private ?int $locationId;
+
+    /**
+     * @var Collection<Device>
+     */
+    #[ORM\ManyToMany(targetEntity: Device::class, inversedBy: 'outlets')]
+    private Collection $devices;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
@@ -22,17 +38,21 @@ class Outlet
     private DateTimeImmutable $updatedAt;
 
     /**
-     * @param Device[]|null $devices
+     * @param Device[] $devices
      */
     public function __construct(
-        private readonly string $name,
-        private readonly ?int $locationId,
-        private readonly ?array $devices,
+        string $name,
+        ?int $locationId,
+        array $devices = [],
     )
     {
         $this->id        = -1;
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+
+        $this->name       = $name;
+        $this->locationId = $locationId;
+        $this->devices    = new ArrayCollection($devices);
     }
 
     public function getId(): int
@@ -61,9 +81,9 @@ class Outlet
     }
 
     /**
-     * @return Device[]|null
+     * @return Collection<Device>
      */
-    public function getDevices(): ?array
+    public function getDevices(): Collection
     {
         return $this->devices;
     }

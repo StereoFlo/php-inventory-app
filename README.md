@@ -24,7 +24,7 @@ php vendor/bin/php-cs-fixer fix  --diff src --config=.php-cs-fixer.dist.php
 ```
 ### phpstan
 ```shell
-php vendor/bin/phpstan analyse src -c phpstan.neon
+php vendor/bin/phpstan analyse src --level=max
 ```
 ### phpunit
 ```shell

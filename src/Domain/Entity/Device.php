@@ -4,8 +4,9 @@ namespace App\Domain\Entity;
 
 use DateTimeImmutable;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'devices')]
@@ -17,26 +18,28 @@ class Device
     private int $id;
 
     #[ORM\Column(type: 'string', length: 250, options: ['default' => null])]
-    private readonly ?string $name;
+    private ?string $name;
 
     #[ORM\Column(type: 'string', length: 250, options: ['default' => null])]
-    private readonly ?string $netName;
+    private ?string $netName;
 
     #[ORM\Column(type: 'string', length: 15, options: ['default' => null])]
-    private readonly ?string $ip;
+    private ?string $ip;
 
     #[ORM\Column(type: 'integer', length: 1, options: ['default' => null])]
-    private readonly ?int $timeToCheck;
+    private ?int $timeToCheck;
 
     #[ORM\Column(type: 'integer', options: ['default' => null, 'unsigned' => true])]
-    private readonly ?int $locationId;
+    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\JoinColumn(name: 'location_id', referencedColumnName: 'id')]
+    private ?int $locationId;
 
     /**
-     * @var Outlet[]|null
+     * @var Collection<Outlet>
      */
     #[ORM\ManyToMany(targetEntity: Outlet::class, inversedBy: 'devices')]
     #[ORM\JoinTable(name: 'devices_outlets')]
-    private readonly ?array $outlets;
+    private Collection $outlets;
 
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
@@ -53,7 +56,7 @@ class Device
         ?string $ip,
         ?int $timeToCheck,
         ?int $locationId,
-        ?array $outlets
+        array $outlets = []
     )
     {
         $this->id        = -1;
@@ -65,7 +68,7 @@ class Device
         $this->ip          = $ip;
         $this->timeToCheck = $timeToCheck;
         $this->locationId  = $locationId;
-        $this->outlets     = $outlets;
+        $this->outlets     = new ArrayCollection($outlets);
     }
 
     public function getId(): int
@@ -109,9 +112,9 @@ class Device
     }
 
     /**
-     * @return Outlet[]
+     * @return Collection<Outlet>
      */
-    public function getOutlets(): ?array
+    public function getOutlets(): Collection
     {
         return $this->outlets;
     }

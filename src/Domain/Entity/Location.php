@@ -4,6 +4,8 @@ namespace App\Domain\Entity;
 
 use DateTimeImmutable;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity]
@@ -15,6 +17,35 @@ class Location
     #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
     private int $id;
 
+    #[ORM\Column(type: 'string', length: 250)]
+    private string $name;
+
+    #[ORM\Column(type: 'string', length: 50)]
+    private string $type;
+
+    #[ORM\Column(type: 'integer', options: ['unsigned' => true])]
+    #[ORM\ManyToOne(targetEntity: Location::class)]
+    #[ORM\JoinColumn(name: 'location_id', referencedColumnName: 'id')]
+    private ?int $locationId;
+
+    /**
+     * @var Collection<self>
+     */
+    #[ORM\OneToMany(mappedBy: 'locationId', targetEntity: self::class)]
+    private Collection $children;
+
+    /**
+     * @var Collection<Outlet>
+     */
+    #[ORM\OneToMany(mappedBy: 'locationId', targetEntity: Outlet::class)]
+    private Collection $outlets;
+
+    /**
+     * @var Collection<Device>
+     */
+    #[ORM\OneToMany(mappedBy: 'locationId', targetEntity: Device::class)]
+    private Collection $devices;
+
     #[ORM\Column(type: 'datetime_immutable')]
     private DateTimeImmutable $createdAt;
 
@@ -22,22 +53,29 @@ class Location
     private DateTimeImmutable $updatedAt;
 
     /**
-     * @param self[]|null $children
-     * @param Outlet[]|null $outlets
-     * @param Device[]|null $devices
+     * @param self[] $children
+     * @param Outlet[] $outlets
+     * @param Device[] $devices
      */
     public function __construct(
-        private readonly string $name,
-        private readonly string $type,
-        private readonly ?int $locationId,
-        private readonly ?array $children,
-        private readonly ?array $outlets,
-        private readonly ?array $devices,
+        string $name,
+        string $type,
+        ?int $locationId,
+        array $children = [],
+        array $outlets = [],
+        array $devices = [],
     )
     {
         $this->id        = -1;
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
+
+        $this->name       = $name;
+        $this->type       = $type;
+        $this->locationId = $locationId;
+        $this->children   = new ArrayCollection($children);
+        $this->outlets    = new ArrayCollection($outlets);
+        $this->devices    = new ArrayCollection($devices);
     }
 
     public function getId(): int
@@ -71,25 +109,25 @@ class Location
     }
 
     /**
-     * @return null|self[]
+     * @return Collection<Location>
      */
-    public function getChildren(): ?array
+    public function getChildren(): Collection
     {
         return $this->children;
     }
 
     /**
-     * @return Outlet[]|null
+     * @return Collection<Outlet>
      */
-    public function getOutlets(): ?array
+    public function getOutlets(): Collection
     {
         return $this->outlets;
     }
 
     /**
-     * @return Device[]|null
+     * @return Collection<Device>
      */
-    public function getDevices(): ?array
+    public function getDevices(): Collection
     {
         return $this->devices;
     }

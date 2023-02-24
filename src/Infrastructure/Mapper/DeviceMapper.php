@@ -3,6 +3,7 @@
 namespace App\Infrastructure\Mapper;
 
 use App\Domain\Entity\Device;
+use App\Domain\Entity\Outlet;
 
 class DeviceMapper
 {
@@ -26,8 +27,10 @@ class DeviceMapper
         ];
 
         $outlets = $device->getOutlets();
-        if (null !== $outlets) {
-            $res['outlets'] = $this->outletMapper->mapCollection($outlets);
+        if (!$outlets->isEmpty()) {
+            /** @var Outlet[] $arr */
+            $arr            = $outlets->toArray();
+            $res['outlets'] = $this->outletMapper->mapCollection($arr);
         }
 
         return $res;
