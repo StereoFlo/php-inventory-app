@@ -26,7 +26,7 @@ class DeviceDetailTest extends KernelTestCase
         $this->assertEquals($arr['data']['outlets'], null);
     }
 
-    public function getDevice(): Device
+    private function getDevice(): Device
     {
         $device = $this->createMock(Device::class);
         $device->method('getId')
