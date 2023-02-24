@@ -4,12 +4,12 @@ namespace App\Infrastructure\Resolver;
 
 use App\Infrastructure\Excepiton\ValidationException;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
+use Symfony\Component\HttpKernel\Controller\ValueResolverInterface;
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 use Symfony\Component\Validator\ConstraintViolation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-abstract class AbstractResolver implements ArgumentValueResolverInterface
+abstract class AbstractResolver implements ValueResolverInterface
 {
     protected const CURRENT_CLASS = '';
 

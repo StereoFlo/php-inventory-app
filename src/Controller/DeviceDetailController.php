@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Domain\Repository\DeviceRepository;
+use App\Domain\Service\DeviceService;
 use App\Infrastructure\Mapper\DeviceMapper;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeviceDetailController
 {
     public function __construct(
-        private readonly DeviceRepository $deviceService,
+        private readonly DeviceService $deviceService,
         private readonly DeviceMapper $mapper
     ) {}
 
