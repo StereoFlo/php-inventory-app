@@ -10,7 +10,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/devices/{id}', name: 'deviceList', requirements: ['id' => '\d+'], methods: [Request::METHOD_GET])]
-class DeviceListController
+class DeviceDetailController
 {
     public function __construct(
         private readonly DeviceRepository $deviceService,
