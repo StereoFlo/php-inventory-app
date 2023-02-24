@@ -12,7 +12,7 @@ RUN apt update && apt install -y \
         libpq-dev
 
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN docker-php-ext-install mysqli pdo pdo_mysql pdo_pgsql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 ADD php.ini /usr/local/etc/php/conf.d/40-custom.ini
 WORKDIR /var/app
