@@ -11,9 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/devices', name: 'deviceCreate', methods: [Request::METHOD_POST])]
 class DeviceCreateController
 {
-    public function __construct(private readonly DeviceService $deviceService)
-    {
-    }
+    public function __construct(private readonly DeviceService $deviceService) {}
 
     public function __invoke(DeviceCreateDto $dto): JsonResponse
     {

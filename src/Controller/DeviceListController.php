@@ -13,7 +13,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class DeviceListController
 {
     public function __construct(
-        private readonly DeviceRepository $deviceService, private readonly DeviceMapper $mapper) {}
+        private readonly DeviceRepository $deviceService,
+        private readonly DeviceMapper $mapper
+    ) {}
 
     public function __invoke(int $id): JsonResponse
     {
