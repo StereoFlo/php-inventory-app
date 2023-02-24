@@ -14,6 +14,19 @@ class DeviceDetailTest extends KernelTestCase
 {
     public function testGetById(): void
     {
+        $device     = $this->getDevice();
+        $deviceRepo = $this->getDeviceRepository($device);
+
+        $controller = new DeviceDetailController($deviceRepo, new DeviceMapper(new OutletMapper()));
+        $response   = $controller(1);
+        $content    = $response->getContent();
+        $arr        = json_decode($content, true);
+        $this->assertEquals($arr['data']['id'], $device->getId());
+        $this->assertEquals($arr['data']['outlets'], $device->getOutlets());
+    }
+
+    public function getDevice(): Device
+    {
         $device = $this->createMock(Device::class);
         $device->method('getId')
             ->willReturn(1);
@@ -34,15 +47,15 @@ class DeviceDetailTest extends KernelTestCase
         $device->method('getUpdatedAt')
             ->willReturn(new DateTimeImmutable());
 
+        return $device;
+    }
+
+    private function getDeviceRepository(Device $device): DeviceRepository
+    {
         $deviceRepo = $this->createMock(DeviceRepository::class);
         $deviceRepo->expects($this->once())
             ->method('getById')
             ->willReturn($device);
-
-        $controller = new DeviceDetailController($deviceRepo, new DeviceMapper(new OutletMapper()));
-        $response = $controller(1);
-        $content = $response->getContent();
-        $arr = json_decode($content, true);
-        $this->assertEquals($arr['data']['id'], $device->getId());
+        return $deviceRepo;
     }
 }

@@ -64,8 +64,8 @@ class Device
         $this->netName     = $netName;
         $this->ip          = $ip;
         $this->timeToCheck = $timeToCheck;
-        $this->locationId   = $locationId;
-        $this->outlets      = $outlets;
+        $this->locationId  = $locationId;
+        $this->outlets     = $outlets;
     }
 
     public function getId(): int

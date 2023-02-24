@@ -28,5 +28,5 @@ php vendor/bin/phpstan analyse src -c phpstan.neon
 ```
 ### phpunit
 ```shell
-php php bin/phpunit
+php bin/phpunit
 ```
