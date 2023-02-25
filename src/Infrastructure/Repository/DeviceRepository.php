@@ -39,6 +39,24 @@ class DeviceRepository implements DeviceRepositoryInterface
         return $device;
     }
 
+    /**
+     * @param int[] $ids
+     * @return Device[]|null
+     */
+    public function getByIds(array $ids): ?array
+    {
+        $qb = $this->manager->createQueryBuilder();
+        $qb->select('device')
+            ->from(Device::class, 'device')
+            ->where($qb->expr()->in('device.id', $ids));
+        /** @var Device[]|null $device */
+        $device = $qb
+            ->getQuery()
+            ->getResult();
+
+        return $device;
+    }
+
     public function getByNameAndIp(string $name, string $ip): ?Device
     {
         /** @var Device|null $device */

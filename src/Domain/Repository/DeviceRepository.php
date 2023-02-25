@@ -10,6 +10,12 @@ interface DeviceRepository
 
     public function getById(int $id): ?Device;
 
+    /**
+     * @param array<int> $ids
+     * @return Device[]|null
+     */
+    public function getByIds(array $ids): ?array;
+
     public function getByNameAndIp(string $name, string $ip): ?Device;
 
     public function save(Device $device): void;
