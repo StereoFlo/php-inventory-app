@@ -4,8 +4,9 @@ namespace App\Controller;
 
 use App\Domain\Service\DeviceService;
 use App\Infrastructure\Mapper\DeviceMapper;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Infrastructure\Responder\Responder;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -14,21 +15,17 @@ class DeviceDetailController
 {
     public function __construct(
         private readonly DeviceService $deviceService,
-        private readonly DeviceMapper $mapper
+        private readonly DeviceMapper $mapper,
+        private readonly Responder $responder
     ) {}
 
-    public function __invoke(int $id): JsonResponse
+    public function __invoke(int $id): Response
     {
         $data = $this->deviceService->getById($id);
         if (null === $data) {
             throw new NotFoundHttpException();
         }
 
-        return new JsonResponse([
-            'meta' => [
-                'success' => true,
-            ],
-            'data' => $this->mapper->map($data),
-        ]);
+        return $this->responder->success($this->mapper->map($data));
     }
 }

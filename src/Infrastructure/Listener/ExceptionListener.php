@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace App\Infrastructure\Listener;
 
+use App\Infrastructure\Responder\Responder;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class ExceptionListener implements EventSubscriberInterface
 {
 
-    public function __construct(private readonly LoggerInterface $logger) {}
+    public function __construct(
+        private readonly LoggerInterface $logger,
+        private readonly Responder $responder
+    ) {}
 
     /**
      * @return array<string, mixed>
@@ -28,10 +32,7 @@ class ExceptionListener implements EventSubscriberInterface
     {
         $exception = $event->getThrowable();
         $this->logger->error($exception->getMessage(), $exception->getTrace());
-        $response = new JsonResponse([
-            'meta' => ['success' => false],
-            'data' => $exception->getMessage(),
-        ]);
+        $response = $this->responder->fail($exception->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         $event->setResponse($response);
     }
