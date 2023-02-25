@@ -12,6 +12,8 @@ docker-compose up --build
 ### Available routes
 `GET /devices/:device_id`
 
+`GET /locations`
+
 create a device
 
 `POST /devices`
