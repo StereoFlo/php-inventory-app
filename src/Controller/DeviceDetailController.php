@@ -21,6 +21,7 @@ class DeviceDetailController
     public function __invoke(int $id): Response
     {
         $data = $this->deviceService->getById($id);
+
         return $this->responder->success($this->mapper->map($data));
     }
 }

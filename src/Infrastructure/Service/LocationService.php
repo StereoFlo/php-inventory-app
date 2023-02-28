@@ -9,6 +9,7 @@ use App\Domain\Repository\DeviceRepository;
 use App\Domain\Repository\LocationRepository;
 use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\LocationService as LocationServiceInterface;
+use App\Infrastructure\Mapper\LocationMapper;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function count;
 
@@ -18,10 +19,11 @@ class LocationService implements LocationServiceInterface
         private readonly LocationRepository $locationRepo,
         private readonly OutletRepository $outletRepo,
         private readonly DeviceRepository $deviceRepo,
+        private readonly LocationMapper $mapper,
     ) {}
 
     /**
-     * @return Location[]
+     * @return array<array<string, mixed>>
      */
     public function getFirstLevel(): array
     {
@@ -30,22 +32,25 @@ class LocationService implements LocationServiceInterface
             return [];
         }
 
-        return $res;
+        return $this->mapper->mapCollection($res);
     }
 
-    public function getById(int $id): Location
+    /**
+     * @return array<string, mixed>
+     */
+    public function getById(int $id): array
     {
         $location = $this->locationRepo->getById($id);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        return $location;
+        return $this->mapper->map($location);
     }
 
     /**
      * @param int[] $ids
-     * @return Location[]
+     * @return array<array<string, mixed>>
      */
     public function getByIds(array $ids): array
     {
@@ -54,7 +59,7 @@ class LocationService implements LocationServiceInterface
             return [];
         }
 
-        return $res;
+        return $this->mapper->mapCollection($res);
     }
 
     /**

@@ -6,6 +6,9 @@ use App\Domain\Entity\Device;
 
 interface DeviceService
 {
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function getByLocationId(int $locationId, int $limit, int $offset): array;
 
     public function getById(int $id): Device;

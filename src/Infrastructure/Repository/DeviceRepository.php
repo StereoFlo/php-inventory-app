@@ -13,7 +13,7 @@ class DeviceRepository implements DeviceRepositoryInterface
     /**
      * @return Device[]|null
      */
-    public function getByLocationId(int $locationId, int $limit, int $offset): ?array
+    public function getByLocationId(int $locationId, int $limit, int $offset): array
     {
         /** @var Device[]|null $devices */
         $devices = $this->manager->createQueryBuilder()
@@ -23,6 +23,10 @@ class DeviceRepository implements DeviceRepositoryInterface
             ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
+
+        if (null === $devices) {
+            return [];
+        }
 
         return $devices;
     }

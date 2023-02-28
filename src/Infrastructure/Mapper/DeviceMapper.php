@@ -5,6 +5,7 @@ namespace App\Infrastructure\Mapper;
 use App\Domain\Entity\Device;
 use App\Domain\Entity\Location;
 use App\Domain\Entity\Outlet;
+use function array_map;
 
 class DeviceMapper
 {

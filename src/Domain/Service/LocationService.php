@@ -7,14 +7,18 @@ use App\Domain\Entity\Location;
 interface LocationService
 {
     /**
-     * @return Location[]
+     * @return array<array<string, mixed>>
      */
     public function getFirstLevel(): array;
-    public function getById(int $id) : Location;
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getById(int $id) : array;
 
     /**
      * @param int[] $ids
-     * @return Location[]
+     * @return array<array<string, mixed>>
      */
     public function getByIds(array $ids): array;
 

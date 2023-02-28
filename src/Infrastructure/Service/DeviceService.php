@@ -7,6 +7,7 @@ use App\Domain\Repository\DeviceRepository;
 use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
 use App\Infrastructure\Mapper\DeviceMapper;
+use RuntimeException;
 use function count;
 
 class DeviceService implements DeviceServiceInterface
@@ -17,6 +18,9 @@ class DeviceService implements DeviceServiceInterface
         private readonly OutletRepository $outletRepo
     ) {}
 
+    /**
+     * @return array<array<string, mixed>>
+     */
     public function getByLocationId(int $locationId, int $limit, int $offset): array
     {
         $devices = $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
@@ -28,7 +32,7 @@ class DeviceService implements DeviceServiceInterface
     {
         $device = $this->deviceRepo->getById($id);
         if (null === $device) {
-            throw new \RuntimeException(); //todo
+            throw new RuntimeException(); //todo
         }
 
         return $device;
@@ -38,7 +42,7 @@ class DeviceService implements DeviceServiceInterface
     {
         $device = $this->deviceRepo->getByNameAndIp($name, $ip);
         if (null === $device) {
-            throw new \RuntimeException(); //todo
+            throw new RuntimeException(); //todo
         }
 
         return $device;
