@@ -17,19 +17,31 @@ class DeviceService implements DeviceServiceInterface
         private readonly OutletRepository $outletRepo
     ) {}
 
-    public function getByLocationId(int $locationId, int $limit, int $offset): ?Device
+    public function getByLocationId(int $locationId, int $limit, int $offset): array
     {
-        return $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
+        $devices = $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
+
+        return $this->mapper->mapCollection($devices);
     }
 
-    public function getById(int $id): ?Device
+    public function getById(int $id): Device
     {
-        return $this->deviceRepo->getById($id);
+        $device = $this->deviceRepo->getById($id);
+        if (null === $device) {
+            throw new \RuntimeException(); //todo
+        }
+
+        return $device;
     }
 
-    public function getByNameAndIp(string $name, string $ip): ?Device
+    public function getByNameAndIp(string $name, string $ip): Device
     {
-        return $this->deviceRepo->getByNameAndIp($name, $ip);
+        $device = $this->deviceRepo->getByNameAndIp($name, $ip);
+        if (null === $device) {
+            throw new \RuntimeException(); //todo
+        }
+
+        return $device;
     }
 
     /**

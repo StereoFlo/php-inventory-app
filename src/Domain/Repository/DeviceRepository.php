@@ -6,7 +6,7 @@ use App\Domain\Entity\Device;
 
 interface DeviceRepository
 {
-    public function getByLocationId(int $locationId, int $limit, int $offset): ?Device;
+    public function getByLocationId(int $locationId, int $limit, int $offset): ?array;
 
     public function getById(int $id): ?Device;
 

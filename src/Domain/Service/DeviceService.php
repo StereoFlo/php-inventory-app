@@ -6,11 +6,11 @@ use App\Domain\Entity\Device;
 
 interface DeviceService
 {
-    public function getByLocationId(int $locationId, int $limit, int $offset): ?Device;
+    public function getByLocationId(int $locationId, int $limit, int $offset): array;
 
-    public function getById(int $id): ?Device;
+    public function getById(int $id): Device;
 
-    public function getByNameAndIp(string $name, string $ip): ?Device;
+    public function getByNameAndIp(string $name, string $ip): Device;
 
     /**
      * @param int[] $outlets

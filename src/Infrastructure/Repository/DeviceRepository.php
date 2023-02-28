@@ -10,18 +10,21 @@ class DeviceRepository implements DeviceRepositoryInterface
 {
     public function __construct(private readonly EntityManagerInterface $manager) {}
 
-    public function getByLocationId(int $locationId, int $limit, int $offset): ?Device
+    /**
+     * @return Device[]|null
+     */
+    public function getByLocationId(int $locationId, int $limit, int $offset): ?array
     {
-        /** @var Device|null $device */
-        $device = $this->manager->createQueryBuilder()
+        /** @var Device[]|null $devices */
+        $devices = $this->manager->createQueryBuilder()
             ->select('device')
             ->from(Device::class, 'device')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
 
-        return $device;
+        return $devices;
     }
 
     public function getById(int $id): ?Device
