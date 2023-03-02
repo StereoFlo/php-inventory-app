@@ -3,10 +3,11 @@
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Location;
-use App\Domain\Repository\LocationRepository as LocationRepositoryInterface;
+use App\Domain\Repository\LocationReadRepository;
+use App\Domain\Repository\LocationWriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class LocationRepository implements LocationRepositoryInterface
+class LocationRepository implements LocationReadRepository, LocationWriteRepository
 {
     public function __construct(private readonly EntityManagerInterface $manager) {}
 

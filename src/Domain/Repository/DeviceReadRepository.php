@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Entity\Device;
 
-interface DeviceRepository
+interface DeviceReadRepository
 {
     /**
      * @return Device[]
@@ -20,6 +20,4 @@ interface DeviceRepository
     public function getByIds(array $ids): ?array;
 
     public function getByNameAndIp(string $name, string $ip): ?Device;
-
-    public function save(Device $device): void;
 }

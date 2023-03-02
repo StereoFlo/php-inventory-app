@@ -3,10 +3,11 @@
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Outlet;
-use App\Domain\Repository\OutletRepository as OutletRepositoryInterface;
+use App\Domain\Repository\OutletReadRepository;
+use App\Domain\Repository\OutletWriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class OutletRepository implements OutletRepositoryInterface
+class OutletRepository implements OutletReadRepository, OutletWriteRepository
 {
     public function __construct(private readonly EntityManagerInterface $manager) {}
 

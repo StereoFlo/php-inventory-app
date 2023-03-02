@@ -5,9 +5,9 @@ namespace App\Infrastructure\Service;
 use App\Domain\Entity\Device;
 use App\Domain\Entity\Location;
 use App\Domain\Entity\Outlet;
-use App\Domain\Repository\DeviceRepository;
-use App\Domain\Repository\LocationRepository;
-use App\Domain\Repository\OutletRepository;
+use App\Domain\Repository\DeviceReadRepository;
+use App\Domain\Repository\LocationReadRepository;
+use App\Domain\Repository\OutletReadRepository;
 use App\Domain\Service\LocationService as LocationServiceInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function count;
@@ -15,9 +15,9 @@ use function count;
 class LocationService implements LocationServiceInterface
 {
     public function __construct(
-        private readonly LocationRepository $locationRepo,
-        private readonly OutletRepository $outletRepo,
-        private readonly DeviceRepository $deviceRepo
+        private readonly LocationReadRepository $locationRepo,
+        private readonly OutletReadRepository   $outletRepo,
+        private readonly DeviceReadRepository   $deviceRepo
     ) {}
 
     /**

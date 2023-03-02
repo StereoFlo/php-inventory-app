@@ -28,6 +28,12 @@ services:
         tags: [ 'controller.service_arguments' ]
 
     App\Domain\Repository\DeviceRepository $deviceService: '@App\Infrastructure\Service\DeviceService'
-    App\Domain\Repository\DeviceRepository $deviceRepo: '@App\Infrastructure\Repository\DeviceRepository'
 
-    App\Domain\Repository\OutletRepository $outletRepo: '@App\Infrastructure\Repository\OutletRepository'
+    App\Domain\Repository\DeviceReadRepository $deviceReadRepo: '@App\Infrastructure\Repository\DeviceRepository'
+    App\Domain\Repository\DeviceWriteRepository $deviceWriteRepo: '@App\Infrastructure\Repository\DeviceRepository'
+
+    App\Domain\Repository\OutletReadRepository $outletReadRepo: '@App\Infrastructure\Repository\OutletRepository'
+    App\Domain\Repository\OutletWriteRepository $outletWriteRepo: '@App\Infrastructure\Repository\OutletRepository'
+
+    App\Domain\Repository\LocationReadRepository $locationReadRepo: '@App\Infrastructure\Repository\LocationRepository'
+    App\Domain\Repository\LocationWriteRepository $locationWriteRepo: '@App\Infrastructure\Repository\LocationRepository'

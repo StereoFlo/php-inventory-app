@@ -3,8 +3,8 @@
 namespace App\Infrastructure\Service;
 
 use App\Domain\Entity\Device;
-use App\Domain\Repository\DeviceRepository;
-use App\Domain\Repository\OutletRepository;
+use App\Domain\Repository\DeviceReadRepository;
+use App\Domain\Repository\OutletReadRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
 use RuntimeException;
 use function count;
@@ -12,8 +12,8 @@ use function count;
 class DeviceService implements DeviceServiceInterface
 {
     public function __construct(
-        private readonly DeviceRepository $deviceRepo,
-        private readonly OutletRepository $outletRepo
+        private readonly DeviceReadRepository $deviceRepo,
+        private readonly OutletReadRepository $outletRepo
     ) {}
 
     /**

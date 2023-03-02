@@ -3,10 +3,11 @@
 namespace App\Infrastructure\Repository;
 
 use App\Domain\Entity\Device;
-use App\Domain\Repository\DeviceRepository as DeviceRepositoryInterface;
+use App\Domain\Repository\DeviceReadRepository;
+use App\Domain\Repository\DeviceWriteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-class DeviceRepository implements DeviceRepositoryInterface
+class DeviceRepository implements DeviceReadRepository, DeviceWriteRepository
 {
     public function __construct(private readonly EntityManagerInterface $manager) {}
 

@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Entity\Location;
 
-interface LocationRepository
+interface LocationReadRepository
 {
     /**
      * @return Location[]|null
@@ -17,5 +17,4 @@ interface LocationRepository
      * @return Location[]|null
      */
     public function getByIds(array $ids): ?array;
-    public function save(Location $location): void;
 }

@@ -4,7 +4,7 @@ namespace App\Domain\Repository;
 
 use App\Domain\Entity\Outlet;
 
-interface OutletRepository
+interface OutletReadRepository
 {
     public function getById(int $id): ?Outlet;
 
@@ -18,5 +18,4 @@ interface OutletRepository
      * @return Outlet[]|null
      */
     public function getByLocationId(int $id): ?array;
-    public function save(Outlet $outlet): void;
 }
