@@ -7,7 +7,7 @@ use App\Domain\Entity\Device;
 interface DeviceService
 {
     /**
-     * @return array<array<string, mixed>>
+     * @return Device[]
      */
     public function getByLocationId(int $locationId, int $limit, int $offset): array;
 
@@ -17,7 +17,6 @@ interface DeviceService
 
     /**
      * @param int[] $outlets
-     * @return array<string, mixed>
      */
     public function create(
         ?string $name,
@@ -26,5 +25,5 @@ interface DeviceService
         ?int $timeToCheck,
         ?int $locationId,
         ?array $outlets
-    ): array;
+    ): Device;
 }

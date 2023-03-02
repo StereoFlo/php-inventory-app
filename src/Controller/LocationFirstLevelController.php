@@ -14,9 +14,8 @@ class LocationFirstLevelController
 {
     public function __construct(
         private readonly LocationService $locationService,
-        private readonly LocationMapper $mapper,
-        private readonly Responder $responder
-
+        private readonly Responder $responder,
+        private readonly LocationMapper $mapper
     ) {}
 
     public function __invoke(): Response

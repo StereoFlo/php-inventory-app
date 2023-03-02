@@ -11,7 +11,7 @@ class DeviceRepository implements DeviceRepositoryInterface
     public function __construct(private readonly EntityManagerInterface $manager) {}
 
     /**
-     * @return Device[]|null
+     * @return Device[]
      */
     public function getByLocationId(int $locationId, int $limit, int $offset): array
     {

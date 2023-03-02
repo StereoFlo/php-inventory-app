@@ -9,7 +9,6 @@ use App\Domain\Repository\DeviceRepository;
 use App\Domain\Repository\LocationRepository;
 use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\LocationService as LocationServiceInterface;
-use App\Infrastructure\Mapper\LocationMapper;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function count;
 
@@ -18,12 +17,11 @@ class LocationService implements LocationServiceInterface
     public function __construct(
         private readonly LocationRepository $locationRepo,
         private readonly OutletRepository $outletRepo,
-        private readonly DeviceRepository $deviceRepo,
-        private readonly LocationMapper $mapper,
+        private readonly DeviceRepository $deviceRepo
     ) {}
 
     /**
-     * @return array<array<string, mixed>>
+     * @return Location[]
      */
     public function getFirstLevel(): array
     {
@@ -32,25 +30,22 @@ class LocationService implements LocationServiceInterface
             return [];
         }
 
-        return $this->mapper->mapCollection($res);
+        return $res;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
-    public function getById(int $id): array
+    public function getById(int $id): Location
     {
         $location = $this->locationRepo->getById($id);
         if (null === $location) {
             throw new NotFoundHttpException();
         }
 
-        return $this->mapper->map($location);
+        return $location;
     }
 
     /**
      * @param int[] $ids
-     * @return array<array<string, mixed>>
+     * @return Location[]
      */
     public function getByIds(array $ids): array
     {
@@ -59,7 +54,7 @@ class LocationService implements LocationServiceInterface
             return [];
         }
 
-        return $this->mapper->mapCollection($res);
+        return $res;
     }
 
     /**
@@ -85,7 +80,7 @@ class LocationService implements LocationServiceInterface
             $outlets = $this->outletRepo->getByIds($outletsIds);
         }
 
-        $location = new Location($name, $type, $locationId, $children, $outlets, $devices);
+        $location = new Location($name, $type, $locationId, $children ?? [], $outlets ?? [], $devices ?? []);
         $this->locationRepo->save($location);
     }
 }

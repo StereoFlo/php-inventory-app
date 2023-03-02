@@ -6,7 +6,6 @@ use App\Domain\Entity\Device;
 use App\Domain\Repository\DeviceRepository;
 use App\Domain\Repository\OutletRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
-use App\Infrastructure\Mapper\DeviceMapper;
 use RuntimeException;
 use function count;
 
@@ -14,18 +13,15 @@ class DeviceService implements DeviceServiceInterface
 {
     public function __construct(
         private readonly DeviceRepository $deviceRepo,
-        private readonly DeviceMapper     $mapper,
         private readonly OutletRepository $outletRepo
     ) {}
 
     /**
-     * @return array<array<string, mixed>>
+     * @return Device[]
      */
     public function getByLocationId(int $locationId, int $limit, int $offset): array
     {
-        $devices = $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
-
-        return $this->mapper->mapCollection($devices);
+        return $this->deviceRepo->getByLocationId($locationId, $limit, $offset);
     }
 
     public function getById(int $id): Device
@@ -50,14 +46,13 @@ class DeviceService implements DeviceServiceInterface
 
     /**
      * @param int[]|null $outlets
-     * @return array<string, mixed>
      */
     public function create(?string $name,
                            ?string $netName,
                            ?string $ip,
                            ?int    $timeToCheck,
                            ?int    $locationId,
-                           ?array  $outlets): array
+                           ?array  $outlets): Device
     {
         $outletsToSave = [];
         if (null !== $outlets && 0 < count($outlets)) {
@@ -76,6 +71,6 @@ class DeviceService implements DeviceServiceInterface
         );
         $this->deviceRepo->save($device);
 
-        return $this->mapper->map($device);
+        return $device;
     }
 }
