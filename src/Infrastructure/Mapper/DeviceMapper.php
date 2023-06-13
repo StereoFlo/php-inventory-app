@@ -37,17 +37,17 @@ class DeviceMapper
     }
 
     /**
-     * @param array<Location> $locations
+     * @param Device[] $devices
      * @return array<array<string, mixed>>
      */
-    public function mapCollection(array $locations): array
+    public function mapCollection(array $devices): array
     {
-        if (empty($locations)) {
+        if (empty($devices)) {
             return [];
         }
 
         /** @var array<array<string, mixed>> $res */
-        $res = array_map([$this, 'map'], $locations);
+        $res = array_map([$this, 'map'], $devices);
 
         return $res;
     }
