@@ -7,6 +7,7 @@ use App\Domain\Repository\DeviceReadRepository;
 use App\Domain\Repository\OutletReadRepository;
 use App\Domain\Service\DeviceService as DeviceServiceInterface;
 use RuntimeException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function count;
 
 class DeviceService implements DeviceServiceInterface
@@ -28,7 +29,7 @@ class DeviceService implements DeviceServiceInterface
     {
         $device = $this->deviceRepo->getById($id);
         if (null === $device) {
-            throw new RuntimeException(); //todo
+            throw new NotFoundHttpException();
         }
 
         return $device;
@@ -38,7 +39,7 @@ class DeviceService implements DeviceServiceInterface
     {
         $device = $this->deviceRepo->getByNameAndIp($name, $ip);
         if (null === $device) {
-            throw new RuntimeException(); //todo
+            throw new NotFoundHttpException();
         }
 
         return $device;
