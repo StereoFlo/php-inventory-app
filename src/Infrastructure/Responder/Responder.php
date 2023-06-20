@@ -3,11 +3,10 @@
 namespace App\Infrastructure\Responder;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 
 class Responder
 {
-    public function success(mixed $data): Response
+    public function success(mixed $data): JsonResponse
     {
         return new JsonResponse([
             'meta' => ['success' => true],
@@ -15,7 +14,7 @@ class Responder
         ]);
     }
 
-    public function successList(mixed $data, int $total, int $limit, int $offset): Response
+    public function successList(mixed $data, int $total, int $limit, int $offset): JsonResponse
     {
         return new JsonResponse([
             'meta' => [
@@ -28,7 +27,7 @@ class Responder
         ]);
     }
 
-    public function fail(mixed $data, int $code = 500): Response
+    public function fail(mixed $data, int $code = 500): JsonResponse
     {
         return new JsonResponse([
             'meta' => ['success' => true],
