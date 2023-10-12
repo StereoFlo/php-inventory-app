@@ -1,4 +1,4 @@
-# Disclaimer
+# About
 
 This version of app is a port of the Go app. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app).
 
