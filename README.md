@@ -1,6 +1,6 @@
 # Disclaimer
 
-this php version is a portable from the golang language package. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app)
+This version of PHP is a port of the Go language package. You can find the original version [here](https://github.com/StereoFlo/go-inventory-app).
 
 # Run the app (WIP)
 
